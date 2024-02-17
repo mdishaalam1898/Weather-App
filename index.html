@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weather App</title>
+    <script
+      src="https://kit.fontawesome.com/c1c07201ed.js"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="box">
+      <div class="wave -one"></div>
+      <div class="wave -two"></div>
+      <div class="wave -three"></div>
+      <div id="wheathericon">
+   
+      </div>
+   
+  
+      <div class="info">
+        <h2 class="location">
+          <i class="fa-sharp fa-solid fa-location-dot" style="color: #fff"></i>
+          {%location%},{%country%}
+        </h2>
+        <p id="date"></p>
+        <p class="temp">{%tempval%}&deg;C</p>
+        <h3 class="temp-min_max">
+          Min {%tempmin%}&deg;C| Max {%tempmax%}&deg;C
+        </h3>
+      </div>
+    </div>
+    <script>
+      const currenDate = document.getElementById("date");
+      const weathericon = document.getElementById("wheathericon");
+      const desc = document.getElementById("desc");
+      const tempStatus = "{%tempStatus%}"; // Fixed the variable name
+      const description = "{%weatherDesc%}";
+
+      // Set a common font size for all icons
+      const iconSize = "3em"; // Adjust the size as needed
+
+      // condition to check weather conditions
+      if (tempStatus === "Sunny") {
+        weathericon.innerHTML = `<i class='fas fa-sun' style='color: #ffd700; font-size: ${iconSize};'></i>`;
+      } else if (tempStatus === "Clouds") {
+        weathericon.innerHTML = `<i class='fas fa-cloud' style='color:#dfe4ea; font-size: ${iconSize};'></i>`;
+      
+      } else if (tempStatus === "Rainy") {
+        weathericon.innerHTML = `<i class='fas fa-cloud-showers-heavy' style='color:#a4b0be; font-size: ${iconSize};'></i>`;
+      } else {
+        weathericon.innerHTML = `<i class='fas fa-cloud' style='color:#44c3de; font-size: ${iconSize};'></i>`;
+      }
+
+      const getCurrentDay = () => {
+        var weekday = new Array();
+        weekday[0] = "Sun";
+        weekday[1] = "Mon";
+        weekday[2] = "Tue";
+        weekday[3] = "Wed";
+        weekday[4] = "Thu";
+        weekday[5] = "Fri";
+        weekday[6] = "Sat";
+        let currentDay = new Date();
+        console.log(weekday[currentDay.getDay()]);
+        let day = weekday[currentDay.getDay()];
+        return day;
+      };
+
+      const getcurrentTime = () => {
+        const months = [
+          "Jan",
+          "Feb",
+          "Mar",
+          "Apr",
+          "May",
+          "Jun",
+          "Jul",
+          "Aug",
+          "Sep",
+          "Oct",
+          "Nov",
+          "Dec",
+        ];
+        var now = new Date();
+        var year = now.getFullYear();
+        var month = months[now.getMonth()];
+        var date = now.getDate();
+        var hours = now.getHours();
+        var mins = now.getMinutes();
+        let periods = "AM";
+        if (hours > 11) {
+          periods = "PM";
+          if (hours > 12) {
+            hours -= 12;
+          }
+          if (mins < 10) {
+            mins = "0" + mins;
+          }
+        }
+        console.log(`${month} ${date} | ${hours}:${mins} ${periods}`);
+        return `${month} ${date} | ${hours}:${mins} ${periods}`;
+      };
+
+      currenDate.innerHTML = getCurrentDay() + " | " + getcurrentTime();
+    </script>
+  </body>
+</html>
